@@ -5,19 +5,34 @@
 extern crate rocket;
 extern crate web_view;
 
+#[cfg(not(debug_assertions))]
 use rocket::http::{ContentType, Status};
+
+#[cfg(not(debug_assertions))]
 use rocket::response;
+
+#[cfg(not(debug_assertions))]
 use rocket::config::{Config, Environment};
+
+#[cfg(not(debug_assertions))]
 use rust_embed::RustEmbed;
 
+#[cfg(not(debug_assertions))]
 use std::ffi::OsStr;
+
+#[cfg(not(debug_assertions))]
 use std::io::Cursor;
+
+#[cfg(not(debug_assertions))]
 use std::path::PathBuf;
+
+#[cfg(not(debug_assertions))]
 use std::{thread, time};
 
 use web_view::{Content};
 
 mod utils;
+#[cfg(not(debug_assertions))]
 use utils::get_rnd_port;
 
 #[cfg(not(debug_assertions))]
@@ -55,7 +70,7 @@ fn dist<'r>(file: PathBuf) -> response::Result<'r> {
 fn main() {
 
   #[cfg(debug_assertions)]
-  let mut port = 8080;
+  let port = 8080;
 
   #[cfg(not(debug_assertions))]
   let mut port = 60123;
