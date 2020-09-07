@@ -20,10 +20,12 @@ use web_view::{Content};
 mod utils;
 use utils::get_rnd_port;
 
+#[cfg(not(debug_assertions))]
 #[derive(RustEmbed)]
-#[folder = "gui\\dist"]
+#[folder = "gui/dist"]
 struct Asset;
 
+#[cfg(not(debug_assertions))]
 #[get("/")]
 fn index<'r>() -> response::Result<'r> {
   Asset::get("index.html").map_or_else(
@@ -32,6 +34,7 @@ fn index<'r>() -> response::Result<'r> {
   )
 }
 
+#[cfg(not(debug_assertions))]
 #[get("/<file..>")]
 fn dist<'r>(file: PathBuf) -> response::Result<'r> {
   let filename = file.display().to_string();
