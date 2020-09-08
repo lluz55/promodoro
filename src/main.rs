@@ -1,6 +1,7 @@
 //#![windows_subsystem = "windows"]
 #![feature(decl_macro, proc_macro_hygiene)]
 
+#[cfg(not(debug_assertions))]
 #[macro_use]
 extern crate rocket;
 extern crate web_view;
@@ -106,7 +107,7 @@ fn main() {
   .title("Promodoro")
   .content(Content::Url(format!("http://localhost:{}/", port)))
   .size(400,600)
-  .resizable(true)
+  .resizable(false)
   .min_size(400, 600)
   .user_data(())
   .invoke_handler(|_webview, _arg| {
