@@ -9,5 +9,5 @@ edition = "2018"
 [dependencies]
 rust-embed= {version = "5.6.0"}
 rocket = "0.4.5"
-web-view = {git = "https://github.com/Boscop/web-view", features = ["edge"]}
+webview_official = {path = "./webview_rust"}
 rand = "0.7"

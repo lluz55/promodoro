@@ -1,10 +1,10 @@
-//#![windows_subsystem = "windows"]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 #![feature(decl_macro, proc_macro_hygiene)]
 
 #[cfg(not(debug_assertions))]
 #[macro_use]
 extern crate rocket;
-extern crate web_view;
+extern crate webview_official;
 
 #[cfg(not(debug_assertions))]
 use rocket::http::{ContentType, Status};
@@ -28,9 +28,9 @@ use std::io::Cursor;
 use std::path::PathBuf;
 
 #[cfg(not(debug_assertions))]
-use std::{thread, time};
+use std::thread;
 
-use web_view::{Content};
+use webview_official::SizeHint;
 
 mod utils;
 #[cfg(not(debug_assertions))]
@@ -103,21 +103,18 @@ fn main() {
     rocket::custom(config.unwrap()).mount("/", routes![index, dist]).launch();
   });
 
-  let webview = web_view::builder()
-  .title("Promodoro")
-  .content(Content::Url(format!("http://localhost:{}/", port)))
-  .size(400,600)
-  .resizable(false)
-  .min_size(400, 600)
-  .user_data(())
-  .invoke_handler(|_webview, _arg| {
-    Ok(())
-  })
-  .build().unwrap();
+  let address = format!("http://localhost:{}/", port);
 
-  webview.run().unwrap();
+  let mut webview = webview_official::WebviewBuilder::new()
+    .title("Promodoro")
+    .width(400)
+    .height(600)
+    .dispatch(|_webview| {
+      
+    })
+    .url(address.as_str())
+    .resize(SizeHint::FIXED)
+    .build();
 
-
-
-
+    webview.run();
 }
